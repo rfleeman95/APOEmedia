@@ -9,3 +9,5 @@ editor_options:
 ---
 
 Check out my awesome PLSDA data on a Luminex I ran for APOE3 and APOE4 primary cultures stimulated with amyloid beta!
+
+[Link to Neuron Only Analysis Comparing APOE3 to APOE4](NeuronOnlyAnalysis.html)
