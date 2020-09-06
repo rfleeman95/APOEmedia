@@ -76,7 +76,7 @@ Loadings_PC1=sort(Loadings_PC1,decreasing=TRUE)
 PC1Length <- length(Loadings_PC1) #this gives you length (number of variables)
 Load_PC1=as.matrix(Loadings_PC1[1:PC1Length])
 Load_PC1=t(Load_PC1)
-barplot(Load_PC1,col="grey89",las=2,ylim=c(-0.4,0.6))
+barplot(Load_PC1,col="grey89",las=2,ylim=c(-0.6,0.4))
 abline(h=0)
 
 Loadings_PC2=PC$rotation[,2]
@@ -84,7 +84,7 @@ Loadings_PC2=sort(Loadings_PC2,decreasing=TRUE)
 PC2Length <- length(Loadings_PC2) #this gives you length (number of variables)
 Load_PC2=as.matrix(Loadings_PC2[1:PC2Length])
 Load_PC2=t(Load_PC2)
-barplot(Load_PC2,col="grey89",las=2,ylim=c(-0.2,0.6))
+barplot(Load_PC2,col="grey89",las=2,ylim=c(-0.6,0.6))
 abline(h=0)
 
 Loadings_PC3=PC$rotation[,3]
