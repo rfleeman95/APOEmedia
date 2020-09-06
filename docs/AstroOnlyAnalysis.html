@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="rfleeman95" />
+
+<meta name="date" content="2020-09-06" />
+
+<title>AstroOnlyAnalysis</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">APOEmedia</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/rfleeman95/APOEmedia">
+    <span class="fa fa-github"></span>
+     
+    Source code
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">AstroOnlyAnalysis</h1>
+<h4 class="author">rfleeman95</h4>
+<h4 class="date">2020-09-06</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2020-09-06
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong> <code>APOEmedia/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.6.2). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20200905code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20200905)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20200905code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20200905)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomrfleeman95APOEmediatree59d77a47303fb0d5d187757fa6eedad63c8b09b4targetblank59d77a4a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/rfleeman95/APOEmedia/tree/59d77a47303fb0d5d187757fa6eedad63c8b09b4" target="_blank">59d77a4</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomrfleeman95APOEmediatree59d77a47303fb0d5d187757fa6eedad63c8b09b4targetblank59d77a4a" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/rfleeman95/APOEmedia/tree/59d77a47303fb0d5d187757fa6eedad63c8b09b4" target="_blank">59d77a4</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .Rproj.user/
+
+Unstaged changes:
+    Modified:   analysis/NeuronOnlyAnalysis.Rmd
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/AstroOnlyAnalysis.Rmd</code>) and HTML (<code>docs/AstroOnlyAnalysis.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/rfleeman95/APOEmedia/blob/59d77a47303fb0d5d187757fa6eedad63c8b09b4/analysis/AstroOnlyAnalysis.Rmd" target="_blank">59d77a4</a>
+</td>
+<td>
+rfleeman95
+</td>
+<td>
+2020-09-06
+</td>
+<td>
+firstrunAstro
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div id="this-analysis-is-plsda-of-just-the-astrocytic-data-for-all-conditions-combined-to-compare-apoe3-to-apoe4.-this-has-data-from-2-luminexes-the-september-and-may-runs." class="section level1">
+<h1>This Analysis is PLSDA of just the astrocytic Data for all conditions combined, to compare APOE3 to APOE4. This has data from 2 Luminexes, the september and May runs.</h1>
+<div id="set-up" class="section level2">
+<h2>Set Up</h2>
+<pre class="r"><code>library(ggplot2)
+library(factoextra)
+library(mixOmics)
+library(ropls)
+library(dplyr)
+library(&quot;workflowr&quot;)</code></pre>
+<pre><code>Warning: package &#39;workflowr&#39; was built under R version 3.6.2</code></pre>
+<pre class="r"><code>##THIS IS PLSDA, I MADE A SEPARATE CODE FOR PLSR
+
+#set domain and file to read
+setwd(&quot;/Users/BeccaFleeman/Box Sync/Proctor_Lab/Thesis/Thesis_Data/Luminex/20200903_RMF_ApoeAstroAndNeuroMedia&quot;)
+My_csv&lt;-read.csv(&quot;20200903_AstroOnlyBothLuminex-lesscyto.csv&quot;,header=T,stringsAsFactors = F)
+
+#Make a quantity only version, taking out the first and last column which are characters (patient and class)
+My_csv_quant &lt;- My_csv[,2:10]</code></pre>
+</div>
+<div id="pca" class="section level2">
+<h2>PCA</h2>
+<pre class="r"><code>#Get Principal components; Scale is essentially creating z-score (https://www.r-bloggers.com/r-tutorial-series-centering-variables-and-generating-z-scores-with-the-scale-function/)
+PC&lt;-prcomp(My_csv_quant,scale=TRUE)
+
+#Get scree plot (this extracts the eigenvalues/variances of dimensions. Eigenvalues correspond to the amount of the variation explained by each PC.)
+#The scree plot is a plot of eigenvalues/variances against the number of dimensions
+fviz_eig(PC)</code></pre>
+<p><img src="figure/AstroOnlyAnalysis.Rmd/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#create a class  variable of what the classes/conditions in my csv are
+#If using genotype:
+class &lt;- My_csv$Class[1:76]
+unique(class) #shows you all your unique classes</code></pre>
+<pre><code>[1] &quot;APOE4&quot; &quot;APOE3&quot;</code></pre>
+<pre class="r"><code>#Create a data frame of your principal components with the classes you set
+#here, &quot;PC$x&quot; is saying to use the &quot;x&quot; category found in PC; &quot;class&quot; is saying to correspond the class we set in the beginning with the PCs
+My_csv_PC&lt;-data.frame(PC$x,class)
+
+
+#This plots your principal components based on which ones you pick
+ggplot(My_csv_PC,aes(x=PC1,y=PC2,col=class))+
+  theme_set(theme_grey() + theme(legend.key=element_blank())) +
+  geom_point(size=3,alpha=0.8) +
+  theme(axis.text.y=element_text(colour=&quot;black&quot;,size=13))+
+  theme(axis.text.x=element_text(colour=&quot;black&quot;,size=13))+
+  theme(axis.title.y=element_text(size=12))+
+  theme(axis.title.x=element_text(size=12))+
+  theme(panel.grid.major = element_blank(),panel.grid.minor = element_blank())+
+  theme(panel.background = element_blank())+
+  theme(axis.line = element_line(colour = &quot;black&quot;,size=0.5))+    
+  theme(legend.title = element_blank())+
+  theme(legend.key.size = unit(0,&#39;lines&#39;))+
+  theme(legend.justification = c(0,1), legend.position = c(0.01,1))+
+  geom_hline(yintercept = 0, linetype=&quot;dashed&quot;, color=&quot;black&quot;,size=0.5)+
+  geom_vline(xintercept = 0,linetype=&quot;dashed&quot;,color=&quot;black&quot;,size=0.5)+
+  xlim(-10,10)+
+  ylim(-10,10)+
+  scale_colour_manual(values = c(&quot;blue&quot;,&quot;darkorange&quot;))</code></pre>
+<p><img src="figure/AstroOnlyAnalysis.Rmd/unnamed-chunk-2-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#shows loadings; note, if you get rid of the two hashtags below(infront of loading...TRUE and length...PC1), it will sort by #
+Loadings_PC1=PC$rotation[,1]
+Loadings_PC1=sort(Loadings_PC1,decreasing=TRUE)
+PC1Length &lt;- length(Loadings_PC1) #this gives you length (number of variables)
+Load_PC1=as.matrix(Loadings_PC1[1:PC1Length])
+Load_PC1=t(Load_PC1)
+barplot(Load_PC1,col=&quot;grey89&quot;,las=2,ylim=c(-0.4,0.6))
+abline(h=0)</code></pre>
+<p><img src="figure/AstroOnlyAnalysis.Rmd/unnamed-chunk-2-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>Loadings_PC2=PC$rotation[,2]
+Loadings_PC2=sort(Loadings_PC2,decreasing=TRUE)
+PC2Length &lt;- length(Loadings_PC2) #this gives you length (number of variables)
+Load_PC2=as.matrix(Loadings_PC2[1:PC2Length])
+Load_PC2=t(Load_PC2)
+barplot(Load_PC2,col=&quot;grey89&quot;,las=2,ylim=c(-0.2,0.6))
+abline(h=0)</code></pre>
+<p><img src="figure/AstroOnlyAnalysis.Rmd/unnamed-chunk-2-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>Loadings_PC3=PC$rotation[,3]
+Loadings_PC3=sort(Loadings_PC3,decreasing=TRUE)
+PC3Length &lt;- length(Loadings_PC3) #this gives you length (number of variables)
+Load_PC3=as.matrix(Loadings_PC3[1:PC3Length])
+Load_PC3=t(Load_PC3)
+barplot(Load_PC3,col=&quot;grey89&quot;,las=2,ylim=c(-0.6,0.6))
+abline(h=0)</code></pre>
+<p><img src="figure/AstroOnlyAnalysis.Rmd/unnamed-chunk-2-5.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="plsda" class="section level2">
+<h2>PLSDA</h2>
+<pre class="r"><code>#Turn your class variable from characters (pre/post; APOE3/APOE4) to factors (1/2)
+class(class)</code></pre>
+<pre><code>[1] &quot;character&quot;</code></pre>
+<pre class="r"><code>class&lt;-as.factor(class)
+class(class)</code></pre>
+<pre><code>[1] &quot;factor&quot;</code></pre>
+<pre class="r"><code>#Cross Validation to tell us which number of LV to choose
+##**Note, dont have to change based on data, only have to change if you want diff cv parameters
+
+k_folds &lt;- 3 #this is how many folds we will split out data into
+n_LV &lt;- 1:5 #this is the range of LV we will try to model with to get an error for
+nrepeats &lt;- 1:10 #going to repeat the 3-fold ten times so a total of 30 test sets are taken
+nrepeat_results &lt;- matrix(NA, ncol=5,nrow=30) #makes a big matrix of 5 column (one for each # of LV model),
+                                              #and 30 rows (for each LV model). 30 = (10 nrepeats) * (3 k_folds)
+
+#matrix will contain error rate of each fold left out for calculation of a Standard Error
+error_groups=matrix(1:30, ncol=3, nrow=10,byrow = TRUE) 
+# This creates a matrix to be written in for each loop. 
+# It is used to fill in big matrix appropriately with each little error matrices of the inner loop
+# You can do it 100x or 10x, to do 100x, nrepeats should be 1:100, 
+#                                        nrepeat_results matrix should have 5col and 300 row
+#                                        error_groups matrix should have 1:300 (3 columns and 100 rows)
+#                            to do 10x, nrepeats should be 1:10
+#                                       nrepeat_results matrix should have 5col and 30 row
+#                                       error_groups matrix should have 1:30 (3 columns and 10 rows)
+for(n in nrepeats){
+   # First, need to make a list with numbers 1:3 with length of dataframe. 
+   # AKA code below assigns each data sample a random group of which &quot;fold&quot; to be in
+    folds_i &lt;- sample(rep(1:k_folds, length.out = nrow(My_csv_quant)))
+   # Next, make a matrix to fill in with error. # of rows is fold #, # of columns are range of LVs tested
+    cv_error &lt;- matrix(NA, nrow = k_folds, ncol = length(n_LV))
+  for (k in 1:k_folds) {
+    test_i &lt;- which(folds_i == k) #chooses which rows will be in the k fold are we doing (will be an int list of 1/3 of the data)
+    train_set &lt;- My_csv_quant[-test_i, ] #train set is the rows that were not used for test_i (will be an int list of other 2/3 of the data)
+    test_set &lt;- My_csv_quant[test_i, ] #test set is the random test_i samples chosen but linked with My_csv_quant
+    condition_test &lt;- class[test_i] #condition here is just what &quot;class&quot; test data was in
+    condition_train &lt;- class[-test_i] #condition here is what class training data was in
+    for (i in n_LV){
+      PLSDA_train_iLVs &lt;-  opls(train_set, condition_train, predI = 1, orthoI = (i-1), fig.pdfC=NULL, info.txtC=NULL, scaleC=&#39;standard&#39;, crossvalI=8)
+      #this just ran ONE pls on the training set (2/3 of the data). *each iteration will use a diff number of LV (i-1)
+      predictions &lt;- predict(PLSDA_train_iLVs, test_set)
+      #this used the PLSDA above to predict the test set condition
+      cv_error[k,i] &lt;- 1-mean(as.numeric(condition_test==predictions))
+      #this is telling it to fill out the cv_error matrix that you made with whether it got it right or wrong
+    }}
+  nrepeat_results[error_groups[n,],1:5] &lt;- cv_error
+  #this is putting the cv_error you just got into the nrepeat_results big matrix you made
+}
+
+CVrepeated_error_averages &lt;- matrix(NA,ncol=1,nrow=5) #makes a new matrix to average the results of the error for each LV
+for (i in 1:ncol(nrepeat_results)){
+  CVrepeated_error_averages[i,1] &lt;- mean(nrepeat_results[,i])
+}
+
+plot(CVrepeated_error_averages[,1],main=&quot;Classification Error, 3-fold CV repeated 10 times&quot;, xlab=&quot;Latent Variable #&quot;, ylab=&quot;Classification error rate&quot;,ylim=c(0,1)) 
+lines(n_LV, CVrepeated_error_averages[,1], lwd = 2)</code></pre>
+<p><img src="figure/AstroOnlyAnalysis.Rmd/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#CHANGE BASED ON CV!!!
+#do pls in ropls, the pred 1 is always 1, orthoI is the number of orthogonalized LV that you want.
+#if you set orthoI=0, you will be doing 1 LV. Leave crossvalI at 8, unsure why though
+oplsda&lt;-opls(My_csv_quant,y=class,predI=1,orthoI=1,crossvalI=6)</code></pre>
+<pre><code>OPLS-DA
+76 samples x 9 variables and 1 response
+standard scaling of predictors and response(s)
+      R2X(cum) R2Y(cum) Q2(cum) RMSEE pre ort pR2Y  pQ2
+Total    0.601    0.647   0.592 0.301   1   1 0.05 0.05</code></pre>
+<p><img src="figure/AstroOnlyAnalysis.Rmd/unnamed-chunk-3-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#if using condition instead of class, must do PLS-DA not opls
+#oplsda&lt;-opls(My_csv_quant,y=class,predI=1,orthoI=1,crossvalI=6)
+
+#SCORES PLOT:
+Scores &lt;- getScoreMN(oplsda)
+oScores &lt;- oplsda@orthoScoreMN
+Scores_Class &lt;- data.frame(Scores, oScores, My_csv$Class)
+colnames(Scores_Class)&lt;- c(&quot;LV1&quot;, &quot;o1&quot;, &quot;Class&quot;) #add as many o&#39;s as needed here
+
+ggplot(Scores_Class,aes(x=LV1,y=o1,col=Class))+
+  #theme_set(theme_gray() + theme(legend.key=element_blank())) +
+  geom_point(size=2,alpha=0.8)+ 
+  theme(axis.text.y=element_text(colour=&quot;black&quot;,size=12))+
+  theme(axis.text.x=element_text(colour=&quot;black&quot;,size=12))+
+  theme(axis.title.y=element_text(size=12))+
+  theme(axis.title.x=element_text(size=12))+
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())+
+  theme(panel.background = element_blank())+
+  theme(axis.line = element_line(colour = &quot;black&quot;,size=0.5))+
+  theme(legend.title=element_blank())+
+  theme(legend.key.size = unit(0, &#39;line&#39;))+ ##
+  theme(legend.justification=c(0,1), legend.position=c(0.02,.98))+
+  theme(legend.text=element_text(size=12))+
+  scale_colour_manual(values = c(&quot;blue&quot;,&quot;darkorange&quot;))+ #need to label accordingly
+  geom_hline(yintercept=0, linetype=&quot;dashed&quot;, 
+             color = &quot;black&quot;, size=0.5)+
+  geom_vline(xintercept = 0, linetype=&quot;dashed&quot;, 
+             color = &quot;black&quot;, size=0.5)+
+  stat_ellipse(type = &quot;t&quot;)+ #default 95% confidence ellipse
+  xlim(-8,8)+
+  ylim(-8,8)+
+  xlab(&quot;Scores on LV 1 (20.3%)&quot;) +     #change this to match input LV!!!
+  ylab(&quot;Scores on LV 2 (60.1%)&quot;)+     #change this to match input LV!!!
+  theme(plot.title = element_blank()) +
+  theme( panel.background = element_rect(colour = &quot;black&quot;, size=1))</code></pre>
+<p><img src="figure/AstroOnlyAnalysis.Rmd/unnamed-chunk-3-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#Get the LV Loadings:
+#to add more stuff to plot, use ?par
+Load&lt;-getLoadingMN(oplsda)
+Loadsort&lt;-sort(Load,decreasing=TRUE)
+Loading&lt;-t(Load)
+barplot(Loading, col=&quot;grey89&quot;, las=2, ylim=c(-0.6,0.4), ylab=&quot;LV1 (Component) 20.3%&quot;, font.lab=2)
+abline(h=0)</code></pre>
+<p><img src="figure/AstroOnlyAnalysis.Rmd/unnamed-chunk-3-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>VIP&lt;-getVipVn(oplsda)
+VIPsort=sort(VIP,decreasing=TRUE)
+barplot(VIPsort, col=&quot;grey89&quot;, las=2, ylim=c(0,2), main= &quot;VIPs&quot;, cex.main=1.5, ylab=&quot;LV1 (Component) 20.3%&quot;, font.lab=2)
+abline(h=1)
+abline(h=0)</code></pre>
+<p><img src="figure/AstroOnlyAnalysis.Rmd/unnamed-chunk-3-5.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="plsda-cross-validation-significance" class="section level2">
+<h2>PLSDA Cross Validation (Significance)</h2>
+<pre class="r"><code>#Significance (compare to random) MAKE SURE TO CHANGE # of LV for what you used in model!
+  #Significance allows us to compare our model error (from CV) to what a &quot;random model&quot; would have for error
+  #This gives us &quot;significance&quot; or &quot;confidence&quot; in our model
+avg_allrandom&lt;-matrix(nrow = 100, ncol = 1) #makes a matrix of 100 rows, 1 column
+colnames(avg_allrandom)=&quot;Error&quot; #names that 1 column &quot;error&quot;
+for (i in 1:100) { #tells it to do this 100x
+  one.random.model.matrix &lt;- matrix(nrow=30,ncol=32) #makes a matrix of 30 rows and x columns
+  #note the number of rows can stay 30, the number of columns needs to be the # for test (below) +1
+  colnames(one.random.model.matrix)=c(1:31, &quot;avg&quot;)  #names the columns 1,2,3, and avg, for the error in 3 columns then the avg of that error
+  #must change the number for 1:x to be the number of test
+  random.condition.vector &lt;- sample(class, length(class), replace = FALSE) #makes a vector of the number of samples you have and randomly puts the two classes (ie e3/e4)
+  for (j in 1:30) {
+    test &lt;- sample(1:nrow(My_csv_quant), nrow(My_csv_quant)/3, replace=FALSE) #randomly chooses a third of the data (shows row #) *will be in random order
+    train &lt;- setdiff(1:nrow(My_csv_quant), test) #makes a vector of the other 2/3 of the data
+    random_plsda &lt;- opls(My_csv_quant[train,],random.condition.vector[train], 
+                         replace=FALSE, predI=1, orthoI=1, crossvalI=6, fig.pdfC=NULL, info.txtC=NULL) #performs plsda on the train data
+    #EDIT the above line to match!!!
+    random_plsda_pred &lt;- predict(random_plsda, My_csv_quant[test,]) #predicts plsda results for test (predicting class)
+    random_plsda_pred_scores &lt;- as.numeric(random_plsda_pred==random.condition.vector[test]) #takes the predictions and makes them numeric (E3/E4 --&gt; 1/2)
+    one.random.model.matrix[j,c(1:25)] &lt;- random_plsda_pred_scores #puts the values in the matrix of 30 rows and 4 columns
+    #must change the number for 1:x to be the number of test
+      avg_error_rate &lt;- (100-(sum(one.random.model.matrix[j,1:25]))/25*100) #takes the ERROR (how often wrong) and makes it a percent 
+      #must change the number for 1:x to be the number of test
+      one.random.model.matrix[j,26] &lt;- avg_error_rate #then puts that avg error matrix xth column that we named avg
+      #must change the number for 1:x to be the number of test+1
+  }
+  avg_allrandom[i,] &lt;- mean(one.random.model.matrix[,26]) #takes the average of those 100 averages
+}
+#avg_allrandom
+hist(avg_allrandom, main=&quot;Avg Error of Random&quot;, xlab=&quot;Percent Error&quot;, col=blues9, las=1)</code></pre>
+<p><img src="figure/AstroOnlyAnalysis.Rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#lines(density(avg_allrandom),lwd=1)
+mean(avg_allrandom)</code></pre>
+<pre><code>[1] 49.04667</code></pre>
+<pre class="r"><code>sd(avg_allrandom)</code></pre>
+<pre><code>[1] 5.564498</code></pre>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 3.6.1 (2019-07-05)
+Platform: x86_64-apple-darwin15.6.0 (64-bit)
+Running under: macOS Catalina 10.15.5
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] parallel  stats     graphics  grDevices utils     datasets  methods  
+[8] base     
+
+other attached packages:
+ [1] workflowr_1.6.2     dplyr_0.8.3         ropls_1.16.0       
+ [4] Biobase_2.44.0      BiocGenerics_0.30.0 mixOmics_6.8.3     
+ [7] lattice_0.20-38     MASS_7.3-51.4       factoextra_1.0.5   
+[10] ggplot2_3.2.1      
+
+loaded via a namespace (and not attached):
+ [1] tidyselect_0.2.5   xfun_0.9           purrr_0.3.2       
+ [4] reshape2_1.4.3     colorspace_1.4-1   vctrs_0.2.0       
+ [7] htmltools_0.3.6    yaml_2.2.0         rlang_0.4.0       
+[10] ggpubr_0.2.3       later_0.8.0        pillar_1.4.2      
+[13] glue_1.3.1         withr_2.1.2        RColorBrewer_1.1-2
+[16] matrixStats_0.55.0 lifecycle_0.1.0    plyr_1.8.4        
+[19] stringr_1.4.0      ggsignif_0.6.0     munsell_0.5.0     
+[22] gtable_0.3.0       evaluate_0.14      labeling_0.3      
+[25] knitr_1.24         httpuv_1.5.2       rARPACK_0.11-0    
+[28] Rcpp_1.0.2         corpcor_1.6.9      promises_1.0.1    
+[31] scales_1.0.0       backports_1.1.4    fs_1.3.1          
+[34] RSpectra_0.15-0    gridExtra_2.3      ellipse_0.4.1     
+[37] digest_0.6.20      stringi_1.4.3      ggrepel_0.8.1     
+[40] grid_3.6.1         rprojroot_1.3-2    tools_3.6.1       
+[43] magrittr_1.5       lazyeval_0.2.2     tibble_2.1.3      
+[46] crayon_1.3.4       whisker_0.4        tidyr_1.0.0       
+[49] pkgconfig_2.0.2    zeallot_0.1.0      Matrix_1.2-17     
+[52] assertthat_0.2.1   rmarkdown_2.3      R6_2.4.0          
+[55] igraph_1.2.4.1     git2r_0.27.1       compiler_3.6.1    </code></pre>
+</div>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
