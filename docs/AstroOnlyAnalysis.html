@@ -504,16 +504,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomrfleeman95APOEmediatree59d77a47303fb0d5d187757fa6eedad63c8b09b4targetblank59d77a4a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/rfleeman95/APOEmedia/tree/59d77a47303fb0d5d187757fa6eedad63c8b09b4" target="_blank">59d77a4</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomrfleeman95APOEmediatree14244286b34a438ab1f69b20847947afeee3376dtargetblank1424428a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/rfleeman95/APOEmedia/tree/14244286b34a438ab1f69b20847947afeee3376d" target="_blank">1424428</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomrfleeman95APOEmediatree59d77a47303fb0d5d187757fa6eedad63c8b09b4targetblank59d77a4a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomrfleeman95APOEmediatree14244286b34a438ab1f69b20847947afeee3376dtargetblank1424428a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/rfleeman95/APOEmedia/tree/59d77a47303fb0d5d187757fa6eedad63c8b09b4" target="_blank">59d77a4</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/rfleeman95/APOEmedia/tree/14244286b34a438ab1f69b20847947afeee3376d" target="_blank">1424428</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -567,6 +567,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/rfleeman95/APOEmedia/blob/14244286b34a438ab1f69b20847947afeee3376d/analysis/AstroOnlyAnalysis.Rmd" target="_blank">1424428</a>
+</td>
+<td>
+rfleeman95
+</td>
+<td>
+2020-09-06
+</td>
+<td>
+wflow_publish(“analysis/AstroOnlyAnalysis.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/rfleeman95/APOEmedia/b7cccd333bfebb6ffa953b380224de339695cdb8/docs/AstroOnlyAnalysis.html" target="_blank">b7cccd3</a>
+</td>
+<td>
+rfleeman95
+</td>
+<td>
+2020-09-06
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/rfleeman95/APOEmedia/blob/59d77a47303fb0d5d187757fa6eedad63c8b09b4/analysis/AstroOnlyAnalysis.Rmd" target="_blank">59d77a4</a>
 </td>
 <td>
@@ -615,6 +649,43 @@ PC&lt;-prcomp(My_csv_quant,scale=TRUE)
 #The scree plot is a plot of eigenvalues/variances against the number of dimensions
 fviz_eig(PC)</code></pre>
 <p><img src="figure/AstroOnlyAnalysis.Rmd/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-2-1">
+Past versions of unnamed-chunk-2-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-2-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/rfleeman95/APOEmedia/blob/b7cccd333bfebb6ffa953b380224de339695cdb8/docs/figure/AstroOnlyAnalysis.Rmd/unnamed-chunk-2-1.png" target="_blank">b7cccd3</a>
+</td>
+<td>
+rfleeman95
+</td>
+<td>
+2020-09-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>#create a class  variable of what the classes/conditions in my csv are
 #If using genotype:
 class &lt;- My_csv$Class[1:76]
@@ -645,23 +716,134 @@ ggplot(My_csv_PC,aes(x=PC1,y=PC2,col=class))+
   ylim(-10,10)+
   scale_colour_manual(values = c(&quot;blue&quot;,&quot;darkorange&quot;))</code></pre>
 <p><img src="figure/AstroOnlyAnalysis.Rmd/unnamed-chunk-2-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-2-2">
+Past versions of unnamed-chunk-2-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-2-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/rfleeman95/APOEmedia/blob/b7cccd333bfebb6ffa953b380224de339695cdb8/docs/figure/AstroOnlyAnalysis.Rmd/unnamed-chunk-2-2.png" target="_blank">b7cccd3</a>
+</td>
+<td>
+rfleeman95
+</td>
+<td>
+2020-09-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>#shows loadings; note, if you get rid of the two hashtags below(infront of loading...TRUE and length...PC1), it will sort by #
 Loadings_PC1=PC$rotation[,1]
 Loadings_PC1=sort(Loadings_PC1,decreasing=TRUE)
 PC1Length &lt;- length(Loadings_PC1) #this gives you length (number of variables)
 Load_PC1=as.matrix(Loadings_PC1[1:PC1Length])
 Load_PC1=t(Load_PC1)
-barplot(Load_PC1,col=&quot;grey89&quot;,las=2,ylim=c(-0.4,0.6))
+barplot(Load_PC1,col=&quot;grey89&quot;,las=2,ylim=c(-0.6,0.4))
 abline(h=0)</code></pre>
 <p><img src="figure/AstroOnlyAnalysis.Rmd/unnamed-chunk-2-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-2-3">
+Past versions of unnamed-chunk-2-3.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-2-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/rfleeman95/APOEmedia/blob/b7cccd333bfebb6ffa953b380224de339695cdb8/docs/figure/AstroOnlyAnalysis.Rmd/unnamed-chunk-2-3.png" target="_blank">b7cccd3</a>
+</td>
+<td>
+rfleeman95
+</td>
+<td>
+2020-09-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>Loadings_PC2=PC$rotation[,2]
 Loadings_PC2=sort(Loadings_PC2,decreasing=TRUE)
 PC2Length &lt;- length(Loadings_PC2) #this gives you length (number of variables)
 Load_PC2=as.matrix(Loadings_PC2[1:PC2Length])
 Load_PC2=t(Load_PC2)
-barplot(Load_PC2,col=&quot;grey89&quot;,las=2,ylim=c(-0.2,0.6))
+barplot(Load_PC2,col=&quot;grey89&quot;,las=2,ylim=c(-0.6,0.6))
 abline(h=0)</code></pre>
 <p><img src="figure/AstroOnlyAnalysis.Rmd/unnamed-chunk-2-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-2-4">
+Past versions of unnamed-chunk-2-4.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-2-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/rfleeman95/APOEmedia/blob/b7cccd333bfebb6ffa953b380224de339695cdb8/docs/figure/AstroOnlyAnalysis.Rmd/unnamed-chunk-2-4.png" target="_blank">b7cccd3</a>
+</td>
+<td>
+rfleeman95
+</td>
+<td>
+2020-09-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>Loadings_PC3=PC$rotation[,3]
 Loadings_PC3=sort(Loadings_PC3,decreasing=TRUE)
 PC3Length &lt;- length(Loadings_PC3) #this gives you length (number of variables)
@@ -670,6 +852,43 @@ Load_PC3=t(Load_PC3)
 barplot(Load_PC3,col=&quot;grey89&quot;,las=2,ylim=c(-0.6,0.6))
 abline(h=0)</code></pre>
 <p><img src="figure/AstroOnlyAnalysis.Rmd/unnamed-chunk-2-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-2-5">
+Past versions of unnamed-chunk-2-5.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-2-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/rfleeman95/APOEmedia/blob/b7cccd333bfebb6ffa953b380224de339695cdb8/docs/figure/AstroOnlyAnalysis.Rmd/unnamed-chunk-2-5.png" target="_blank">b7cccd3</a>
+</td>
+<td>
+rfleeman95
+</td>
+<td>
+2020-09-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="plsda" class="section level2">
 <h2>PLSDA</h2>
@@ -730,6 +949,43 @@ for (i in 1:ncol(nrepeat_results)){
 plot(CVrepeated_error_averages[,1],main=&quot;Classification Error, 3-fold CV repeated 10 times&quot;, xlab=&quot;Latent Variable #&quot;, ylab=&quot;Classification error rate&quot;,ylim=c(0,1)) 
 lines(n_LV, CVrepeated_error_averages[,1], lwd = 2)</code></pre>
 <p><img src="figure/AstroOnlyAnalysis.Rmd/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-1">
+Past versions of unnamed-chunk-3-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/rfleeman95/APOEmedia/blob/b7cccd333bfebb6ffa953b380224de339695cdb8/docs/figure/AstroOnlyAnalysis.Rmd/unnamed-chunk-3-1.png" target="_blank">b7cccd3</a>
+</td>
+<td>
+rfleeman95
+</td>
+<td>
+2020-09-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>#CHANGE BASED ON CV!!!
 #do pls in ropls, the pred 1 is always 1, orthoI is the number of orthogonalized LV that you want.
 #if you set orthoI=0, you will be doing 1 LV. Leave crossvalI at 8, unsure why though
@@ -740,6 +996,43 @@ standard scaling of predictors and response(s)
       R2X(cum) R2Y(cum) Q2(cum) RMSEE pre ort pR2Y  pQ2
 Total    0.601    0.647   0.592 0.301   1   1 0.05 0.05</code></pre>
 <p><img src="figure/AstroOnlyAnalysis.Rmd/unnamed-chunk-3-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-2">
+Past versions of unnamed-chunk-3-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/rfleeman95/APOEmedia/blob/b7cccd333bfebb6ffa953b380224de339695cdb8/docs/figure/AstroOnlyAnalysis.Rmd/unnamed-chunk-3-2.png" target="_blank">b7cccd3</a>
+</td>
+<td>
+rfleeman95
+</td>
+<td>
+2020-09-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>#if using condition instead of class, must do PLS-DA not opls
 #oplsda&lt;-opls(My_csv_quant,y=class,predI=1,orthoI=1,crossvalI=6)
 
@@ -776,6 +1069,43 @@ ggplot(Scores_Class,aes(x=LV1,y=o1,col=Class))+
   theme(plot.title = element_blank()) +
   theme( panel.background = element_rect(colour = &quot;black&quot;, size=1))</code></pre>
 <p><img src="figure/AstroOnlyAnalysis.Rmd/unnamed-chunk-3-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-3">
+Past versions of unnamed-chunk-3-3.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/rfleeman95/APOEmedia/blob/b7cccd333bfebb6ffa953b380224de339695cdb8/docs/figure/AstroOnlyAnalysis.Rmd/unnamed-chunk-3-3.png" target="_blank">b7cccd3</a>
+</td>
+<td>
+rfleeman95
+</td>
+<td>
+2020-09-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>#Get the LV Loadings:
 #to add more stuff to plot, use ?par
 Load&lt;-getLoadingMN(oplsda)
@@ -784,12 +1114,86 @@ Loading&lt;-t(Load)
 barplot(Loading, col=&quot;grey89&quot;, las=2, ylim=c(-0.6,0.4), ylab=&quot;LV1 (Component) 20.3%&quot;, font.lab=2)
 abline(h=0)</code></pre>
 <p><img src="figure/AstroOnlyAnalysis.Rmd/unnamed-chunk-3-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-4">
+Past versions of unnamed-chunk-3-4.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/rfleeman95/APOEmedia/blob/b7cccd333bfebb6ffa953b380224de339695cdb8/docs/figure/AstroOnlyAnalysis.Rmd/unnamed-chunk-3-4.png" target="_blank">b7cccd3</a>
+</td>
+<td>
+rfleeman95
+</td>
+<td>
+2020-09-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>VIP&lt;-getVipVn(oplsda)
 VIPsort=sort(VIP,decreasing=TRUE)
 barplot(VIPsort, col=&quot;grey89&quot;, las=2, ylim=c(0,2), main= &quot;VIPs&quot;, cex.main=1.5, ylab=&quot;LV1 (Component) 20.3%&quot;, font.lab=2)
 abline(h=1)
 abline(h=0)</code></pre>
 <p><img src="figure/AstroOnlyAnalysis.Rmd/unnamed-chunk-3-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-5">
+Past versions of unnamed-chunk-3-5.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/rfleeman95/APOEmedia/blob/b7cccd333bfebb6ffa953b380224de339695cdb8/docs/figure/AstroOnlyAnalysis.Rmd/unnamed-chunk-3-5.png" target="_blank">b7cccd3</a>
+</td>
+<td>
+rfleeman95
+</td>
+<td>
+2020-09-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="plsda-cross-validation-significance" class="section level2">
 <h2>PLSDA Cross Validation (Significance)</h2>
@@ -824,6 +1228,43 @@ for (i in 1:100) { #tells it to do this 100x
 #avg_allrandom
 hist(avg_allrandom, main=&quot;Avg Error of Random&quot;, xlab=&quot;Percent Error&quot;, col=blues9, las=1)</code></pre>
 <p><img src="figure/AstroOnlyAnalysis.Rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-1">
+Past versions of unnamed-chunk-4-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-4-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/rfleeman95/APOEmedia/blob/b7cccd333bfebb6ffa953b380224de339695cdb8/docs/figure/AstroOnlyAnalysis.Rmd/unnamed-chunk-4-1.png" target="_blank">b7cccd3</a>
+</td>
+<td>
+rfleeman95
+</td>
+<td>
+2020-09-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>#lines(density(avg_allrandom),lwd=1)
 mean(avg_allrandom)</code></pre>
 <pre><code>[1] 49.04667</code></pre>
