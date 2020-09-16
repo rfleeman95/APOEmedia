@@ -15,3 +15,5 @@ Check out my awesome PLSDA data on a Luminex I ran for APOE3 and APOE4 primary c
 [Astrocyte Only Analysis Comparing APOE3 to APOE4](AstroOnlyAnalysis.html)
 
 [Compare Astrocytes to Neurons](AstrocyteAndNeuron.html)
+
+[Neurons only PLSR of All Concentrations (conditioned, NA, and het)](NeuronMediaAllPLSR.html)
