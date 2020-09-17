@@ -1,0 +1,259 @@
+---
+title: "NeuronMediaNAvsCond"
+author: "rfleeman95"
+date: "2020-09-16"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+#This analysis is PLSDA of Neuronal media only and compares neurons treated with FRESH 50% astrocytic media/50% neuronal media with A-beta heterogeneous aggregates to neurons treated with 50% conditioned astrocytic media from astrocytes stimulated with a-beta/50% fresh neuronal media. So both have equal amounts of fresh neuronal media, just differing on fresh vs cond astrocytic media.
+
+## Set Up
+
+```{r message = FALSE}
+library(ggplot2)
+library(factoextra)
+library(mixOmics)
+library(ropls)
+library(dplyr)
+library("workflowr")
+
+setwd("/Users/BeccaFleeman/Box Sync/Proctor_Lab/Thesis/Thesis_Data/Luminex")
+My_csv<-read.csv("NeuroTreatedwAstroOnly.csv",header=T,stringsAsFactors = F)
+
+
+#Make a quantity only version, taking out the first and last column which are characters (patient and class)
+My_csv_quant <- My_csv[,2:19]
+```
+
+## PCA
+
+```{r}
+#Get Principal components; Scale is essentially creating z-score (https://www.r-bloggers.com/r-tutorial-series-centering-variables-and-generating-z-scores-with-the-scale-function/)
+PC<-prcomp(My_csv_quant,scale=TRUE)
+
+#Get scree plot (this extracts the eigenvalues/variances of dimensions. Eigenvalues correspond to the amount of the variation explained by each PC.)
+#The scree plot is a plot of eigenvalues/variances against the number of dimensions
+fviz_eig(PC)
+
+
+#create a class  variable of what the classes/conditions in my csv are
+#If using genotype:
+class <- My_csv$Media[1:64]
+unique(class) #shows you all your unique classes
+
+#if using condition of abeta:
+#class <- My_csv$Condition[1:64]
+
+
+#Create a data frame of your principal components with the classes you set
+#here, "PC$x" is saying to use the "x" category found in PC; "class" is saying to correspond the class we set in the beginning with the PCs
+My_csv_PC<-data.frame(PC$x,class)
+My_csv_PC #view it
+
+#This plots your principal components based on which ones you pick
+ggplot(My_csv_PC,aes(x=PC1,y=PC2,col=class))+
+  theme_set(theme_grey() + theme(legend.key=element_blank())) +
+  geom_point(size=3,alpha=0.8) +
+  theme(axis.text.y=element_text(colour="black",size=13))+
+  theme(axis.text.x=element_text(colour="black",size=13))+
+  theme(axis.title.y=element_text(size=12))+
+  theme(axis.title.x=element_text(size=12))+
+  theme(panel.grid.major = element_blank(),panel.grid.minor = element_blank())+
+  theme(panel.background = element_blank())+
+  theme(axis.line = element_line(colour = "black",size=0.5))+
+  theme(legend.title = element_blank())+
+  theme(legend.key.size = unit(0,'lines'))+
+  theme(legend.justification = c(0,1), legend.position = c(0.01,1))+
+  geom_hline(yintercept = 0, linetype="dashed", color="black",size=0.5)+
+  geom_vline(xintercept = 0,linetype="dashed",color="black",size=0.5)+
+  #geom_text(aes(label=class),hjust=0, vjust=0) #this would label all points
+  #geom_text(aes(label=ifelse(PC2>6,as.character(class),'')),hjust=0,vjust=0)+ #this labels all outlier ish points here on PC2
+  #xlim(-10,10)+
+  ylim(-12,5)+
+  scale_colour_manual(values = c("blue","darkorange"))
+
+#shows loadings; note, if you get rid of the two hashtags below(infront of loading...TRUE and length...PC1), it will sort by #
+Loadings_PC1=PC$rotation[,1]
+Loadings_PC1=sort(Loadings_PC1,decreasing=TRUE)
+PC1Length <- length(Loadings_PC1) #this gives you length (number of variables)
+Load_PC1=as.matrix(Loadings_PC1[1:PC1Length])
+Load_PC1=t(Load_PC1)
+barplot(Load_PC1,col="grey89",las=2,ylim=c(-0.4,0.4))
+abline(h=0)
+
+Loadings_PC2=PC$rotation[,2]
+Loadings_PC2=sort(Loadings_PC2,decreasing=TRUE)
+PC2Length <- length(Loadings_PC2) #this gives you length (number of variables)
+Load_PC2=as.matrix(Loadings_PC2[1:PC2Length])
+Load_PC2=t(Load_PC2)
+barplot(Load_PC2,col="grey89",las=2,ylim=c(-0.6,0.2))
+abline(h=0)
+
+Loadings_PC3=PC$rotation[,3]
+Loadings_PC3=sort(Loadings_PC3,decreasing=TRUE)
+PC3Length <- length(Loadings_PC3) #this gives you length (number of variables)
+Load_PC3=as.matrix(Loadings_PC3[1:PC3Length])
+Load_PC3=t(Load_PC3)
+barplot(Load_PC3,col="grey89",las=2,ylim=c(-0.4,0.4))
+abline(h=0)
+```
+
+## PLSDA
+
+```{r}
+
+#Turn your class variable from characters (pre/post; APOE3/APOE4) to factors (1/2)
+class(class)
+class<-as.factor(class)
+class(class)
+unique(class)
+
+#Cross Validation to tell us which number of LV to choose
+##**Note, dont have to change based on data, only have to change if you want diff cv parameters
+
+k_folds <- 3 #this is how many folds we will split out data into
+n_LV <- 1:5 #this is the range of LV we will try to model with to get an error for
+nrepeats <- 1:10 #going to repeat the 3-fold ten times so a total of 30 test sets are taken
+nrepeat_results <- matrix(NA, ncol=5,nrow=30) #makes a big matrix of 5 column (one for each # of LV model),
+                                              #and 30 rows (for each LV model). 30 = (10 nrepeats) * (3 k_folds)
+
+#matrix will contain error rate of each fold left out for calculation of a Standard Error
+error_groups=matrix(1:30, ncol=3, nrow=10,byrow = TRUE)
+# This creates a matrix to be written in for each loop.
+# It is used to fill in big matrix appropriately with each little error matrices of the inner loop
+# You can do it 100x or 10x, to do 100x, nrepeats should be 1:100,
+#                                        nrepeat_results matrix should have 5col and 300 row
+#                                        error_groups matrix should have 1:300 (3 columns and 100 rows)
+#                            to do 10x, nrepeats should be 1:10
+#                                       nrepeat_results matrix should have 5col and 30 row
+#                                       error_groups matrix should have 1:30 (3 columns and 10 rows)
+for(n in nrepeats){
+   # First, need to make a list with numbers 1:3 with length of dataframe.
+   # AKA code below assigns each data sample a random group of which "fold" to be in
+    folds_i <- sample(rep(1:k_folds, length.out = nrow(My_csv_quant)))
+   # Next, make a matrix to fill in with error. # of rows is fold #, # of columns are range of LVs tested
+    cv_error <- matrix(NA, nrow = k_folds, ncol = length(n_LV))
+  for (k in 1:k_folds) {
+    test_i <- which(folds_i == k) #chooses which rows will be in the k fold are we doing (will be an int list of 1/3 of the data)
+    train_set <- My_csv_quant[-test_i, ] #train set is the rows that were not used for test_i (will be an int list of other 2/3 of the data)
+    test_set <- My_csv_quant[test_i, ] #test set is the random test_i samples chosen but linked with My_csv_quant
+    condition_test <- class[test_i] #condition here is just what "class" test data was in
+    condition_train <- class[-test_i] #condition here is what class training data was in
+    for (i in n_LV){
+      PLSDA_train_iLVs <-  opls(train_set, condition_train, predI = 1, orthoI = (i-1), fig.pdfC=NULL, info.txtC=NULL, scaleC='standard', crossvalI=8)
+      #this just ran ONE pls on the training set (2/3 of the data). *each iteration will use a diff number of LV (i-1)
+      predictions <- predict(PLSDA_train_iLVs, test_set)
+      #this used the PLSDA above to predict the test set condition
+      cv_error[k,i] <- 1-mean(as.numeric(condition_test==predictions))
+      #this is telling it to fill out the cv_error matrix that you made with whether it got it right or wrong
+    }}
+  nrepeat_results[error_groups[n,],1:5] <- cv_error
+  #this is putting the cv_error you just got into the nrepeat_results big matrix you made
+}
+
+CVrepeated_error_averages <- matrix(NA,ncol=1,nrow=5) #makes a new matrix to average the results of the error for each LV
+for (i in 1:ncol(nrepeat_results)){
+  CVrepeated_error_averages[i,1] <- mean(nrepeat_results[,i])
+}
+
+plot(CVrepeated_error_averages[,1],main="Classification Error, 3-fold CV repeated 10 times", xlab="Latent Variable #", ylab="Classification error rate",ylim=c(0,1))
+lines(n_LV, CVrepeated_error_averages[,1], lwd = 2)
+
+
+#CHANGE BASED ON CV!!!
+#do pls in ropls, the pred 1 is always 1, orthoI is the number of orthogonalized LV that you want.
+#if you set orthoI=0, you will be doing 1 LV. Leave crossvalI at 8, unsure why though
+oplsda<-opls(My_csv_quant,y=class,predI=1,orthoI=1,crossvalI=8)
+
+#if using condition instead of class, must do PLS-DA not opls
+#oplsda<-opls(My_csv_quant,y=class,predI=1,orthoI=1,crossvalI=6)
+
+#SCORES PLOT:
+Scores <- getScoreMN(oplsda)
+oScores <- oplsda@orthoScoreMN
+Scores_Class <- data.frame(Scores, oScores, My_csv$Media)
+colnames(Scores_Class)<- c("LV1", "o1", "Media") #add as many o's as needed here
+
+ggplot(Scores_Class,aes(x=LV1,y=o1,col=Media))+
+  #theme_set(theme_gray() + theme(legend.key=element_blank())) +
+  geom_point(size=2,alpha=0.8)+
+  theme(axis.text.y=element_text(colour="black",size=12))+
+  theme(axis.text.x=element_text(colour="black",size=12))+
+  theme(axis.title.y=element_text(size=12))+
+  theme(axis.title.x=element_text(size=12))+
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())+
+  theme(panel.background = element_blank())+
+  theme(axis.line = element_line(colour = "black",size=0.5))+
+  theme(legend.title=element_blank())+
+  theme(legend.key.size = unit(0, 'line'))+ ##
+  theme(legend.justification=c(0,1), legend.position=c(0.02,.98))+
+  theme(legend.text=element_text(size=12))+
+  scale_colour_manual(values = c("blue","darkorange"))+ #need to label accordingly
+  geom_hline(yintercept=0, linetype="dashed",
+             color = "black", size=0.5)+
+  geom_vline(xintercept = 0, linetype="dashed",
+             color = "black", size=0.5)+
+  stat_ellipse(type = "t")+ #default 95% confidence ellipse
+  xlim(-5,5)+
+  ylim(-8,8)+
+  xlab("Scores on LV 1 (15.0%)") +     #change this to match input LV!!!
+  ylab("Scores on LV 2 (42.5%)")+     #change this to match input LV!!!
+  theme(plot.title = element_blank()) +
+  theme( panel.background = element_rect(colour = "black", size=1))
+
+
+#Get the LV Loadings:
+#to add more stuff to plot, use ?par
+Load<-getLoadingMN(oplsda)
+Loadsort<-sort(Load,decreasing=TRUE)
+Loading<-t(Load)
+barplot(Loading, col="grey89", las=2, ylim=c(-0.6,0.6), ylab="LV1 (Component) 15.0%", font.lab=2)
+#!!CHANGE TITLE AND LV %
+abline(h=0)
+
+VIP<-getVipVn(oplsda)
+VIPsort=sort(VIP,decreasing=TRUE)
+barplot(VIPsort, col="grey89", las=2, ylim=c(0,2.5), main= "VIPs", cex.main=1.5, ylab="LV1 (Component) 15.0%", font.lab=2)
+#!!CHANGE TITLE AND LV %
+abline(h=1)
+abline(h=0)
+
+#VIPmatrix <- as.data.frame(VIP)
+#orderedVIPmatrix <- as.data.frame(VIPmatrix[order(VIP),])
+
+#Significance (compare to random) MAKE SURE TO CHANGE # of LV for what you used in model!
+  #Significance allows us to compare our model error (from CV) to what a "random model" would have for error
+  #This gives us "significance" or "confidence" in our model
+avg_allrandom<-matrix(nrow = 100, ncol = 1) #makes a matrix of 100 rows, 1 column
+colnames(avg_allrandom)="Error" #names that 1 column "error"
+for (i in 1:100) { #tells it to do this 100x
+  one.random.model.matrix <- matrix(nrow=30,ncol=22) #makes a matrix of 30 rows and x columns
+  #note the number of rows can stay 30, the number of columns needs to be the # for test (below) +1
+  colnames(one.random.model.matrix)=c(1:21, "avg")  #names the columns 1,2,3, and avg, for the error in 3 columns then the avg of that error
+  #must change the number for 1:x to be the number of test
+  random.condition.vector <- sample(class, length(class), replace = FALSE) #makes a vector of the number of samples you have and randomly puts the two classes (ie e3/e4)
+  for (j in 1:30) {
+    test <- sample(1:nrow(My_csv_quant), nrow(My_csv_quant)/3, replace=FALSE) #randomly chooses a third of the data (shows row #) *will be in random order
+    train <- setdiff(1:nrow(My_csv_quant), test) #makes a vector of the other 2/3 of the data
+    random_plsda <- opls(My_csv_quant[train,],random.condition.vector[train],
+                         replace=FALSE, predI=1, orthoI=1, crossvalI=8, fig.pdfC=NULL, info.txtC=NULL) #performs plsda on the train data
+    #EDIT the above line to match!!!
+    random_plsda_pred <- predict(random_plsda, My_csv_quant[test,]) #predicts plsda results for test (predicting class)
+    random_plsda_pred_scores <- as.numeric(random_plsda_pred==random.condition.vector[test]) #takes the predictions and makes them numeric (E3/E4 --> 1/2)
+    one.random.model.matrix[j,c(1:21)] <- random_plsda_pred_scores #puts the values in the matrix of 30 rows and 4 columns
+    #must change the number for 1:x to be the number of test
+      avg_error_rate <- (100-(sum(one.random.model.matrix[j,1:21]))/21*100) #takes the ERROR (how often wrong) and makes it a percent
+      #must change the number for 1:x to be the number of test
+      one.random.model.matrix[j,22] <- avg_error_rate #then puts that avg error matrix xth column that we named avg
+      #must change the number for 1:x to be the number of test+1
+  }
+  avg_allrandom[i,] <- mean(one.random.model.matrix[,22]) #takes the average of those 100 averages
+}
+avg_allrandom
+hist(avg_allrandom, main="Avg Error of Random", xlab="Percent Error", col=blues9, las=1)
+#lines(density(avg_allrandom),lwd=1)
+mean(avg_allrandom)
+sd(avg_allrandom)
+```
