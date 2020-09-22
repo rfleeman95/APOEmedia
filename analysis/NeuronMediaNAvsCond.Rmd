@@ -164,9 +164,6 @@ ErrorTable <- as.table(CVrepeated_error_averages)
 rownames(ErrorTable)<- c("1 LV", "2 LVs", "3 LVs", "4 LVs", "5 LVs")
 colnames(ErrorTable)<- c("Error")
 ErrorTable
-print("Choose LV with error:")
-min(ErrorTable)
-
 
 #CHANGE BASED ON CV!!!
 #do pls in ropls, the pred 1 is always 1, orthoI is the number of orthogonalized LV that you want.
@@ -257,7 +254,7 @@ for (i in 1:100) { #tells it to do this 100x
   }
   avg_allrandom[i,] <- mean(one.random.model.matrix[,22]) #takes the average of those 100 averages
 }
-avg_allrandom
+
 hist(avg_allrandom, main="Avg Error of Random", xlab="Percent Error", col=blues9, las=1)
 #lines(density(avg_allrandom),lwd=1)
 mean(avg_allrandom)
