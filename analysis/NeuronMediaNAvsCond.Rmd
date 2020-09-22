@@ -50,7 +50,7 @@ unique(class) #shows you all your unique classes
 #Create a data frame of your principal components with the classes you set
 #here, "PC$x" is saying to use the "x" category found in PC; "class" is saying to correspond the class we set in the beginning with the PCs
 My_csv_PC<-data.frame(PC$x,class)
-My_csv_PC #view it
+#My_csv_PC #view it
 
 #This plots your principal components based on which ones you pick
 ggplot(My_csv_PC,aes(x=PC1,y=PC2,col=class))+
@@ -160,6 +160,12 @@ for (i in 1:ncol(nrepeat_results)){
 
 plot(CVrepeated_error_averages[,1],main="Classification Error, 3-fold CV repeated 10 times", xlab="Latent Variable #", ylab="Classification error rate",ylim=c(0,1))
 lines(n_LV, CVrepeated_error_averages[,1], lwd = 2)
+ErrorTable <- as.table(CVrepeated_error_averages)
+rownames(ErrorTable)<- c("1 LV", "2 LVs", "3 LVs", "4 LVs", "5 LVs")
+colnames(ErrorTable)<- c("Error")
+ErrorTable
+print("Choose LV with error:")
+min(ErrorTable)
 
 
 #CHANGE BASED ON CV!!!
