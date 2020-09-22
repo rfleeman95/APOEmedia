@@ -504,16 +504,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomrfleeman95APOEmediatreeb3069415b825e17becc072ee7b9ddd1c98781034targetblankb306941a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/rfleeman95/APOEmedia/tree/b3069415b825e17becc072ee7b9ddd1c98781034" target="_blank">b306941</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomrfleeman95APOEmediatree623100dcc8bf52a9bf0e0c5ac5d88f8130fa54fatargetblank623100da"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/rfleeman95/APOEmedia/tree/623100dcc8bf52a9bf0e0c5ac5d88f8130fa54fa" target="_blank">623100d</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomrfleeman95APOEmediatreeb3069415b825e17becc072ee7b9ddd1c98781034targetblankb306941a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomrfleeman95APOEmediatree623100dcc8bf52a9bf0e0c5ac5d88f8130fa54fatargetblank623100da" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/rfleeman95/APOEmedia/tree/b3069415b825e17becc072ee7b9ddd1c98781034" target="_blank">b306941</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/rfleeman95/APOEmedia/tree/623100dcc8bf52a9bf0e0c5ac5d88f8130fa54fa" target="_blank">623100d</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -522,6 +522,11 @@ Note that you need to be careful to ensure that all relevant files for the analy
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+
+Untracked files:
+    Untracked:  analysis/1uMABastroOnNeurons.Rmd
+    Untracked:  analysis/restastrosonrestneurons-noAB.Rmd
+    Untracked:  analysis/restneurons.Rmd
 
 Unstaged changes:
     Modified:   analysis/NeuronMediaAllPLSR.Rmd
@@ -563,6 +568,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/rfleeman95/APOEmedia/blob/623100dcc8bf52a9bf0e0c5ac5d88f8130fa54fa/analysis/NeuronMediaNAvsCond.Rmd" target="_blank">623100d</a>
+</td>
+<td>
+rfleeman95
+</td>
+<td>
+2020-09-22
+</td>
+<td>
+wflow_publish(“analysis/NeuronMediaNAvsCond.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/rfleeman95/APOEmedia/c17a42508440397d28b324deeafbad81128e87b0/docs/NeuronMediaNAvsCond.html" target="_blank">c17a425</a>
+</td>
+<td>
+rfleeman95
+</td>
+<td>
+2020-09-22
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1003,10 +1042,6 @@ ErrorTable</code></pre>
 3 LVs 0.01875902
 4 LVs 0.01233766
 5 LVs 0.01067821</code></pre>
-<pre class="r"><code>print(&quot;Choose LV with error:&quot;)</code></pre>
-<pre><code>[1] &quot;Choose LV with error:&quot;</code></pre>
-<pre class="r"><code>min(ErrorTable)</code></pre>
-<pre><code>[1] 0.01067821</code></pre>
 <pre class="r"><code>#CHANGE BASED ON CV!!!
 #do pls in ropls, the pred 1 is always 1, orthoI is the number of orthogonalized LV that you want.
 #if you set orthoI=0, you will be doing 1 LV. Leave crossvalI at 8, unsure why though
@@ -1248,109 +1283,8 @@ for (i in 1:100) { #tells it to do this 100x
   }
   avg_allrandom[i,] &lt;- mean(one.random.model.matrix[,22]) #takes the average of those 100 averages
 }
-avg_allrandom</code></pre>
-<pre><code>          Error
-  [1,] 50.00000
-  [2,] 51.90476
-  [3,] 60.31746
-  [4,] 55.71429
-  [5,] 46.82540
-  [6,] 43.33333
-  [7,] 52.69841
-  [8,] 47.14286
-  [9,] 40.95238
- [10,] 49.36508
- [11,] 41.58730
- [12,] 46.50794
- [13,] 54.60317
- [14,] 45.23810
- [15,] 49.68254
- [16,] 50.63492
- [17,] 51.11111
- [18,] 53.49206
- [19,] 41.90476
- [20,] 53.80952
- [21,] 42.85714
- [22,] 50.15873
- [23,] 46.19048
- [24,] 48.88889
- [25,] 45.39683
- [26,] 39.52381
- [27,] 42.06349
- [28,] 43.65079
- [29,] 57.61905
- [30,] 55.71429
- [31,] 52.06349
- [32,] 51.11111
- [33,] 48.41270
- [34,] 52.38095
- [35,] 56.03175
- [36,] 52.85714
- [37,] 44.44444
- [38,] 45.07937
- [39,] 45.23810
- [40,] 49.04762
- [41,] 46.19048
- [42,] 46.66667
- [43,] 42.53968
- [44,] 42.69841
- [45,] 48.88889
- [46,] 53.49206
- [47,] 52.22222
- [48,] 35.55556
- [49,] 50.47619
- [50,] 46.50794
- [51,] 49.20635
- [52,] 47.14286
- [53,] 51.74603
- [54,] 49.68254
- [55,] 48.57143
- [56,] 54.12698
- [57,] 42.06349
- [58,] 43.80952
- [59,] 43.65079
- [60,] 42.06349
- [61,] 42.53968
- [62,] 52.38095
- [63,] 48.73016
- [64,] 48.88889
- [65,] 46.82540
- [66,] 53.01587
- [67,] 44.28571
- [68,] 48.25397
- [69,] 44.60317
- [70,] 36.03175
- [71,] 39.84127
- [72,] 47.30159
- [73,] 51.58730
- [74,] 47.46032
- [75,] 47.30159
- [76,] 47.61905
- [77,] 43.80952
- [78,] 42.53968
- [79,] 48.25397
- [80,] 46.66667
- [81,] 53.33333
- [82,] 48.73016
- [83,] 46.03175
- [84,] 53.65079
- [85,] 47.93651
- [86,] 50.95238
- [87,] 50.47619
- [88,] 41.26984
- [89,] 40.79365
- [90,] 39.36508
- [91,] 51.26984
- [92,] 44.44444
- [93,] 51.26984
- [94,] 46.19048
- [95,] 47.77778
- [96,] 42.53968
- [97,] 38.57143
- [98,] 44.76190
- [99,] 54.44444
-[100,] 51.58730</code></pre>
-<pre class="r"><code>hist(avg_allrandom, main=&quot;Avg Error of Random&quot;, xlab=&quot;Percent Error&quot;, col=blues9, las=1)</code></pre>
+
+hist(avg_allrandom, main=&quot;Avg Error of Random&quot;, xlab=&quot;Percent Error&quot;, col=blues9, las=1)</code></pre>
 <p><img src="figure/NeuronMediaNAvsCond.Rmd/unnamed-chunk-3-6.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-6">
